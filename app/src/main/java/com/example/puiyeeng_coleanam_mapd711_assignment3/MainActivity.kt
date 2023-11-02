@@ -1,6 +1,7 @@
 package com.example.puiyeeng_coleanam_mapd711_assignment3
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
@@ -130,6 +131,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 markerList.clear()
 
+                // Adds custom info window to markers that have been clicked
+                mMap.setInfoWindowAdapter(CustomInfoWindowAdapter(this))
+
                 // Get the selected city lat long and move the camera to the selected city
                 val city = getCityByName(selectedCity)
                 val lat = city?.lat
@@ -151,8 +155,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             val location = LatLng(lat, long)
                             // Add markers and add into markerList for record
-                            mMap.addMarker(MarkerOptions().position(location).title(name))
+                            mMap.addMarker(MarkerOptions().position(location).title(name).snippet(restaurant.address + "\n" + lat + " " + long))
                                 ?.let { it1 -> markerList.add(it1) }
+
                         }
                     }
                 }
@@ -160,7 +165,19 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
+//    internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
+//
+////        private val window: View = layoutInflater.inflate(R.layout.restaurant_info_window, null)
+//        private val contents: View = layoutInflater.inflate(R.layout.restaurant_info_window, null)
+//        override fun getInfoContents(p0: Marker): View? {
+//            TODO("Not yet implemented")
+//        }
+//
+//        override fun getInfoWindow(p0: Marker): View? {
+//
+//        }
+//
+//    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -170,5 +187,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(toronto).title("Toronto"))
             ?.let { it1 -> markerList.add(it1) }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(toronto, 10f))
+
     }
 }
