@@ -2,13 +2,16 @@
     <string name="app_name">PuiYeeNg_ColeAnam_MAPD711_Assignment3</string>
     <string name="header">Pizza Restaurants Finder</string>
     <string name="title">Select a city to find your pizza restaurant locations:</string>
+    <string name="MAPS_API_KEY">AIzaSyC6ZdVH_Yabp2XYVfBL7xM-TkFL9JnzAEw</string>
 
     <!-- String array for cities -->
     <string-array name="months">
-        <item>Toronto downtown</item>
+        <item>Toronto Downtown</item>
         <item>Scarborough</item>
         <item>Mississauga</item>
         <item>Oakville</item>
         <item>North York</item>
     </string-array>
+
+
 </resources>
