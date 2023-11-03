@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -21,14 +22,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMainBinding
 
     // Create restaurant Class
-    class Restaurant(var city: String, var name: String, var address: String, var lat:Double, var long:Double)
+    class Restaurant(var city: String, var name: String, var address: String, var lat:Double, var long:Double, var openingHours: String)
 
     // Create a list to store Restaurant objects
     var restaurantList = mutableListOf<Restaurant>()
 
     // Add restaurant function
-    fun addRestaurant(city: String, name: String, address: String, lat:Double, long:Double) {
-        val restaurant = Restaurant(city, name, address, lat, long)
+    fun addRestaurant(city: String, name: String, address: String, lat:Double, long:Double, openingHours: String) {
+        val restaurant = Restaurant(city, name, address, lat, long, openingHours)
         restaurantList.add(restaurant)
     }
 
@@ -92,31 +93,31 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         // Create and add Restaurant objects to the Restaurant list
-        addRestaurant("Scarborough", "Pizza Hut Scarborough", "259 Morningside Ave, Scarborough, ON M1E 2M9",43.77394948907918, -79.18650444859026)
-        addRestaurant("Scarborough", "Pizza Pizza", "9390 Sheppard Ave E, Scarborough, ON M1B 5R5",43.81015540696113, -79.17711340912099)
-        addRestaurant("Scarborough", "Pizzaville", "3601 Lawrence Ave E, Scarborough, ON M1G 1P5",43.759983024907314, -79.22308873000904)
-        addRestaurant("Scarborough", "Pizza On Fire", "880 Ellesmere Rd Unit 10, Scarborough, ON M1P 2L8",43.77040475312448, -79.2829760414697)
-        addRestaurant("Scarborough", "Scarborough Pizza Kabob", "2157 Lawrence Ave E, Scarborough, ON M1P 2P5",43.75202200813325, -79.26700909454824)
-        addRestaurant("Mississauga", "Pizza Pizza", "1250 Eglinton Ave W, Mississauga, ON L5V 1N3",43.583655029241676, -79.68331554113073)
-        addRestaurant("Mississauga", "Pizza Hut", "1900 Fowler Dr, Mississauga, ON L5K 0A1",43.531596695350615, -79.64658019665042)
-        addRestaurant("Mississauga", "Domino's Pizza", "4040 Creditview Rd, Mississauga, ON L5C 3Y8",43.57284194426748, -79.6661497852168)
-        addRestaurant("Mississauga", "Marconi Pizza", "3635 Cawthra Rd, Mississauga, ON L5A 2Y5",43.617094838593594, -79.61925606663655)
-        addRestaurant("Mississauga", "DoughBox Wood Fired Pizza & Pasta", "5955 Latimer Dr, Mississauga, ON L5V 0B7",43.613183844381645, -79.69535175219349)
-        addRestaurant("North York", "Pizza Nova", "879 York Mills Rd, Toronto, ON M3B 1Y5",43.7567874490461, -79.34869552936054)
-        addRestaurant("North York", "Pizza Pizza", "738 Sheppard Ave E, North York, ON M2K 1C4",43.77330001278007, -79.37668612187372)
-        addRestaurant("North York", "Domino's Pizza", "820 Sheppard Ave W, Toronto, ON M3H 2T1",43.75737170080432, -79.450874184608982)
-        addRestaurant("North York", "Pizza Hut North York", "3555 Don Mills Rd, North York, ON M2H 3N3",43.799837775261594, -79.35329349144726)
-        addRestaurant("North York", "Blaze Pizza", "4841 Yonge St, Toronto, ON M2N 5X2",43.76702572974226, -79.41010416762245)
-        addRestaurant("Oakville", "Gino's Pizza", "1289 Marlborough Ct, Oakville, ON L6H 2R9",43.47324603029097, -79.69333717749052)
-        addRestaurant("Oakville", "Double Double Pizza & Chicken", "2530 Sixth Line, Oakville, ON L6H 6W5",43.48012910575361, -79.72662533741885)
-        addRestaurant("Oakville", "Pizza Nova", "1133 Monastery Dr, Oakville, ON L6M 2A3",43.447347937395016, -79.72680245555834)
-        addRestaurant("Oakville", "Vili's Pizza & Shawarma And Wings", "562 Kerr St, Oakville, ON L6K 3C7",43.45081972601985, -79.68943067086398)
-        addRestaurant("Oakville", "Big Taste Pizza", "2165 Grosvenor St, Oakville, ON L6H 7K9",43.49362206721472, -79.6956297825188)
-        addRestaurant("Toronto Downtown", "Za Cafe Pizzeria & Bar", "372 Bay St., Toronto, ON M5H 2W9",43.65246673121666, -79.38139772717668)
-        addRestaurant("Toronto Downtown", "Pizza Pizza", "471 Yonge St, Toronto, ON M4Y 1A1",43.66323050122609, -79.38333392520497)
-        addRestaurant("Toronto Downtown", "Panago Pizza", "133 Bremner Blvd, Toronto, ON M5J 3A7",43.643851590186294, -79.38368772608715)
-        addRestaurant("Toronto Downtown", "Pizza Gigi", "189 Harbord St, Toronto, ON M5S 1H5",43.663617735975706, -79.40953259149738)
-        addRestaurant("Toronto Downtown", "Pizzaiolo", "1 Toronto St, Toronto, ON M5C 2V6",43.65187998507932, -79.3762349706368)
+        addRestaurant("Scarborough", "Pizza Hut Scarborough", "259 Morningside Ave, Scarborough, ON M1E 2M9",43.77394948907918, -79.18650444859026,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Scarborough", "Pizza Pizza", "9390 Sheppard Ave E, Scarborough, ON M1B 5R5",43.81015540696113, -79.17711340912099,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Scarborough", "Pizzaville", "3601 Lawrence Ave E, Scarborough, ON M1G 1P5",43.759983024907314, -79.22308873000904,"10:00 a.m. to 09:00 p.m.")
+        addRestaurant("Scarborough", "Pizza On Fire", "880 Ellesmere Rd Unit 10, Scarborough, ON M1P 2L8",43.77040475312448, -79.2829760414697,"10:00 a.m. to 11:00 p.m.")
+        addRestaurant("Scarborough", "Scarborough Pizza Kabob", "2157 Lawrence Ave E, Scarborough, ON M1P 2P5",43.75202200813325, -79.26700909454824,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Mississauga", "Pizza Pizza", "1250 Eglinton Ave W, Mississauga, ON L5V 1N3",43.583655029241676, -79.68331554113073,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Mississauga", "Pizza Hut", "1900 Fowler Dr, Mississauga, ON L5K 0A1",43.531596695350615, -79.64658019665042,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Mississauga", "Domino's Pizza", "4040 Creditview Rd, Mississauga, ON L5C 3Y8",43.57284194426748, -79.6661497852168,"10:00 a.m. to 09:00 p.m.")
+        addRestaurant("Mississauga", "Marconi Pizza", "3635 Cawthra Rd, Mississauga, ON L5A 2Y5",43.617094838593594, -79.61925606663655,"10:00 a.m. to 11:00 p.m.")
+        addRestaurant("Mississauga", "DoughBox Wood Fired Pizza & Pasta", "5955 Latimer Dr, Mississauga, ON L5V 0B7",43.613183844381645, -79.69535175219349,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("North York", "Pizza Nova", "879 York Mills Rd, Toronto, ON M3B 1Y5",43.7567874490461, -79.34869552936054,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("North York", "Pizza Pizza", "738 Sheppard Ave E, North York, ON M2K 1C4",43.77330001278007, -79.37668612187372,"10:00 a.m. to 09:00 p.m.")
+        addRestaurant("North York", "Domino's Pizza", "820 Sheppard Ave W, Toronto, ON M3H 2T1",43.75737170080432, -79.450874184608982,"10:00 a.m. to 11:00 p.m.")
+        addRestaurant("North York", "Pizza Hut North York", "3555 Don Mills Rd, North York, ON M2H 3N3",43.799837775261594, -79.35329349144726,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("North York", "Blaze Pizza", "4841 Yonge St, Toronto, ON M2N 5X2",43.76702572974226, -79.41010416762245,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Oakville", "Gino's Pizza", "1289 Marlborough Ct, Oakville, ON L6H 2R9",43.47324603029097, -79.69333717749052,"10:00 a.m. to 09:00 p.m.")
+        addRestaurant("Oakville", "Double Double Pizza & Chicken", "2530 Sixth Line, Oakville, ON L6H 6W5",43.48012910575361, -79.72662533741885,"10:00 a.m. to 11:00 p.m.")
+        addRestaurant("Oakville", "Pizza Nova", "1133 Monastery Dr, Oakville, ON L6M 2A3",43.447347937395016, -79.72680245555834,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Oakville", "Vili's Pizza & Shawarma And Wings", "562 Kerr St, Oakville, ON L6K 3C7",43.45081972601985, -79.68943067086398,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Oakville", "Big Taste Pizza", "2165 Grosvenor St, Oakville, ON L6H 7K9",43.49362206721472, -79.6956297825188,"10:00 a.m. to 09:00 p.m.")
+        addRestaurant("Toronto Downtown", "Za Cafe Pizzeria & Bar", "372 Bay St., Toronto, ON M5H 2W9",43.65246673121666, -79.38139772717668,"10:00 a.m. to 11:00 p.m.")
+        addRestaurant("Toronto Downtown", "Pizza Pizza", "471 Yonge St, Toronto, ON M4Y 1A1",43.66323050122609, -79.38333392520497,"10:00 a.m. to 09:00 p.m.")
+        addRestaurant("Toronto Downtown", "Panago Pizza", "133 Bremner Blvd, Toronto, ON M5J 3A7",43.643851590186294, -79.38368772608715,"10:00 a.m. to 11:00 p.m.")
+        addRestaurant("Toronto Downtown", "Pizza Gigi", "189 Harbord St, Toronto, ON M5S 1H5",43.663617735975706, -79.40953259149738,"11:00 a.m. to 11:00 p.m.")
+        addRestaurant("Toronto Downtown", "Pizzaiolo", "1 Toronto St, Toronto, ON M5C 2V6",43.65187998507932, -79.3762349706368,"11:00 a.m. to 11:00 p.m.")
 
         // when search button is pressed
         search.setOnClickListener {
@@ -155,7 +156,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             val location = LatLng(lat, long)
                             // Add markers and add into markerList for record
-                            mMap.addMarker(MarkerOptions().position(location).title(name).snippet(restaurant.address + "\n" + lat + " " + long))
+                            mMap.addMarker(MarkerOptions().position(location).title(name).snippet(restaurant.address + "\n" + lat + " " + long + "\n" + "Opening Hours:" + restaurant.openingHours))
                                 ?.let { it1 -> markerList.add(it1) }
 
                         }
@@ -163,24 +164,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+        val mapTypeSwitch: Switch = findViewById(R.id.mapTypeSwitch)
+        mapTypeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mapFragment.getMapAsync { googleMap ->
+                    mMap = googleMap
+                    mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                }
+            } else {
+                mapFragment.getMapAsync { googleMap ->
+                    mMap = googleMap
+                    mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                }
+            }
+        }
     }
-
-//    internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
-//
-////        private val window: View = layoutInflater.inflate(R.layout.restaurant_info_window, null)
-//        private val contents: View = layoutInflater.inflate(R.layout.restaurant_info_window, null)
-//        override fun getInfoContents(p0: Marker): View? {
-//            TODO("Not yet implemented")
-//        }
-//
-//        override fun getInfoWindow(p0: Marker): View? {
-//
-//        }
-//
-//    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
         // Add a marker in Toronto and move the camera
         val toronto = LatLng(43.651070, -79.347015)
