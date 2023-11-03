@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -155,7 +156,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             val location = LatLng(lat, long)
                             // Add markers and add into markerList for record
-                            mMap.addMarker(MarkerOptions().position(location).title(name).snippet(restaurant.address + "\n" + lat + " " + long + "\n" + "Opening Hours: " + restaurant.openingHours))
+                            mMap.addMarker(MarkerOptions().position(location).title(name).snippet(restaurant.address + "\n" + lat + " " + long + "\n" + "Opening Hours:" + restaurant.openingHours))
                                 ?.let { it1 -> markerList.add(it1) }
 
                         }
@@ -163,25 +164,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+        val mapTypeSwitch: Switch = findViewById(R.id.mapTypeSwitch)
+        mapTypeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                mapFragment.getMapAsync { googleMap ->
+                    mMap = googleMap
+                    mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                }
+            } else {
+                mapFragment.getMapAsync { googleMap ->
+                    mMap = googleMap
+                    mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                }
+            }
+        }
     }
-
-//    internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
-//
-////        private val window: View = layoutInflater.inflate(R.layout.restaurant_info_window, null)
-//        private val contents: View = layoutInflater.inflate(R.layout.restaurant_info_window, null)
-//        override fun getInfoContents(p0: Marker): View? {
-//            TODO("Not yet implemented")
-//        }
-//
-//        override fun getInfoWindow(p0: Marker): View? {
-//
-//        }
-//
-//    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
         // Add a marker in Toronto and move the camera
         val toronto = LatLng(43.651070, -79.347015)
